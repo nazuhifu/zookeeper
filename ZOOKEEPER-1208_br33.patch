@@ -1,0 +1,236 @@
+diff --git src/java/main/org/apache/zookeeper/server/FinalRequestProcessor.java src/java/main/org/apache/zookeeper/server/FinalRequestProcessor.java
+index bf4fa14..713b763 100644
+--- src/java/main/org/apache/zookeeper/server/FinalRequestProcessor.java
++++ src/java/main/org/apache/zookeeper/server/FinalRequestProcessor.java
+@@ -25,9 +25,9 @@ import java.util.List;
+ import org.apache.jute.Record;
+ import org.apache.log4j.Logger;
+ import org.apache.zookeeper.KeeperException;
+-import org.apache.zookeeper.ZooDefs;
+ import org.apache.zookeeper.KeeperException.Code;
+ import org.apache.zookeeper.KeeperException.SessionMovedException;
++import org.apache.zookeeper.ZooDefs;
+ import org.apache.zookeeper.ZooDefs.OpCode;
+ import org.apache.zookeeper.data.ACL;
+ import org.apache.zookeeper.data.Stat;
+diff --git src/java/main/org/apache/zookeeper/server/PrepRequestProcessor.java src/java/main/org/apache/zookeeper/server/PrepRequestProcessor.java
+index 5607686..586e50c 100644
+--- src/java/main/org/apache/zookeeper/server/PrepRequestProcessor.java
++++ src/java/main/org/apache/zookeeper/server/PrepRequestProcessor.java
+@@ -30,8 +30,8 @@ import org.apache.jute.Record;
+ import org.apache.log4j.Logger;
+ import org.apache.zookeeper.CreateMode;
+ import org.apache.zookeeper.KeeperException;
+-import org.apache.zookeeper.ZooDefs;
+ import org.apache.zookeeper.KeeperException.Code;
++import org.apache.zookeeper.ZooDefs;
+ import org.apache.zookeeper.ZooDefs.OpCode;
+ import org.apache.zookeeper.common.PathUtils;
+ import org.apache.zookeeper.data.ACL;
+@@ -383,7 +383,10 @@ public class PrepRequestProcessor extends Thread implements RequestProcessor {
+                         addChangeRecord(new ChangeRecord(txnHeader.getZxid(),
+                                 path2Delete, null, 0, null));
+                     }
++
++                    zks.sessionTracker.setSessionClosing(request.sessionId);
+                 }
++
+                 LOG.info("Processed session termination for sessionid: 0x"
+                         + Long.toHexString(request.sessionId));
+                 break;
+diff --git src/java/main/org/apache/zookeeper/server/SessionTracker.java src/java/main/org/apache/zookeeper/server/SessionTracker.java
+index 8f9f68c..3535e1b 100644
+--- src/java/main/org/apache/zookeeper/server/SessionTracker.java
++++ src/java/main/org/apache/zookeeper/server/SessionTracker.java
+@@ -34,6 +34,7 @@ public interface SessionTracker {
+     public static interface Session {
+         long getSessionId();
+         int getTimeout();
++        boolean isClosing();
+     }
+     public static interface SessionExpirer {
+         void expire(Session session);
+@@ -53,6 +54,12 @@ public interface SessionTracker {
+     boolean touchSession(long sessionId, int sessionTimeout);
+ 
+     /**
++     * Mark that the session is in the process of closing.
++     * @param sessionId
++     */
++    void setSessionClosing(long sessionId);
++
++    /**
+      * 
+      */
+     void shutdown();
+diff --git src/java/main/org/apache/zookeeper/server/SessionTrackerImpl.java src/java/main/org/apache/zookeeper/server/SessionTrackerImpl.java
+index de6d013..41966c7 100644
+--- src/java/main/org/apache/zookeeper/server/SessionTrackerImpl.java
++++ src/java/main/org/apache/zookeeper/server/SessionTrackerImpl.java
+@@ -56,16 +56,19 @@ public class SessionTrackerImpl extends Thread implements SessionTracker {
+             this.sessionId = sessionId;
+             this.timeout = timeout;
+             this.tickTime = expireTime;
++            isClosing = false;
+         }
+ 
+         final long sessionId;
+         final int timeout;
+         long tickTime;
++        boolean isClosing;
+ 
+         Object owner;
+ 
+         public long getSessionId() { return sessionId; }
+         public int getTimeout() { return timeout; }
++        public boolean isClosing() { return isClosing; }
+     }
+ 
+     public static long initializeNextSession(long id) {
+@@ -188,6 +191,17 @@ public class SessionTrackerImpl extends Thread implements SessionTracker {
+         return true;
+     }
+ 
++    synchronized public void setSessionClosing(long sessionId) {
++        if (LOG.isTraceEnabled()) {
++            LOG.info("Session closing: 0x" + Long.toHexString(sessionId));
++        }
++        SessionImpl s = sessionsById.get(sessionId);
++        if (s == null) {
++            return;
++        }
++        s.isClosing = true;
++    }
++
+     synchronized public void removeSession(long sessionId) {
+         SessionImpl s = sessionsById.remove(sessionId);
+         sessionsWithTimeout.remove(sessionId);
+@@ -237,7 +251,7 @@ public class SessionTrackerImpl extends Thread implements SessionTracker {
+ 
+     synchronized public void checkSession(long sessionId, Object owner) throws KeeperException.SessionExpiredException, KeeperException.SessionMovedException {
+         SessionImpl session = sessionsById.get(sessionId);
+-        if (session == null) {
++        if (session == null || session.isClosing()) {
+             throw new KeeperException.SessionExpiredException();
+         }
+         if (session.owner == null) {
+diff --git src/java/main/org/apache/zookeeper/server/quorum/LearnerSessionTracker.java src/java/main/org/apache/zookeeper/server/quorum/LearnerSessionTracker.java
+index d61c9c6..3182419 100644
+--- src/java/main/org/apache/zookeeper/server/quorum/LearnerSessionTracker.java
++++ src/java/main/org/apache/zookeeper/server/quorum/LearnerSessionTracker.java
+@@ -89,4 +89,8 @@ public class LearnerSessionTracker implements SessionTracker {
+     	// dup what we had before
+     	pwriter.println(toString());
+     }
++
++    public void setSessionClosing(long sessionId) {
++        // Nothing to do here.
++    }
+ }
+diff --git src/java/test/org/apache/zookeeper/test/SessionInvalidationTest.java src/java/test/org/apache/zookeeper/test/SessionInvalidationTest.java
+new file mode 100644
+index 0000000..3365273
+--- /dev/null
++++ src/java/test/org/apache/zookeeper/test/SessionInvalidationTest.java
+@@ -0,0 +1,101 @@
++/**
++ * Licensed to the Apache Software Foundation (ASF) under one
++ * or more contributor license agreements.  See the NOTICE file
++ * distributed with this work for additional information
++ * regarding copyright ownership.  The ASF licenses this file
++ * to you under the Apache License, Version 2.0 (the
++ * "License"); you may not use this file except in compliance
++ * with the License.  You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.apache.zookeeper.test;
++
++import java.io.ByteArrayOutputStream;
++import java.io.InputStream;
++import java.io.OutputStream;
++import java.net.Socket;
++
++import org.apache.jute.BinaryOutputArchive;
++import org.apache.zookeeper.ZooDefs;
++import org.apache.zookeeper.ZooDefs.Ids;
++import org.apache.zookeeper.ZooDefs.OpCode;
++import org.apache.zookeeper.ZooKeeper;
++import org.apache.zookeeper.proto.ConnectRequest;
++import org.apache.zookeeper.proto.CreateRequest;
++import org.apache.zookeeper.proto.RequestHeader;
++
++public class SessionInvalidationTest extends ClientBase {
++    /**
++     * Test solution for ZOOKEEPER-1208. Verify that operations are not
++     * accepted after a close session.
++     * 
++     * We're using our own marshalling here in order to force an operation
++     * after the session is closed (ZooKeeper.class will not allow this). Also
++     * by filling the pipe with operations it increases the likelyhood that
++     * the server will process the create before FinalRequestProcessor
++     * removes the session from the tracker.
++     */
++    public void testCreateAfterCloseShouldFail() throws Exception {
++        for (int i = 0; i < 10; i++) {
++            ByteArrayOutputStream baos = new ByteArrayOutputStream();
++            BinaryOutputArchive boa = BinaryOutputArchive.getArchive(baos);
++
++            // open a connection
++            boa.writeInt(44, "len");
++            ConnectRequest conReq = new ConnectRequest(0, 0, 30000, 0, new byte[16]);
++            conReq.serialize(boa, "connect");
++
++            // close connection
++            boa.writeInt(8, "len");
++            RequestHeader h = new RequestHeader(1, ZooDefs.OpCode.closeSession);
++            h.serialize(boa, "header");
++
++            // create ephemeral znode
++            boa.writeInt(52, "len"); // We'll fill this in later
++            RequestHeader header = new RequestHeader(2, OpCode.create);
++            header.serialize(boa, "header");
++            CreateRequest createReq = new CreateRequest("/foo" + i, new byte[0],
++                    Ids.OPEN_ACL_UNSAFE, 1);
++            createReq.serialize(boa, "request");
++            baos.close();
++            
++            System.out.println("Length:" + baos.toByteArray().length);
++            
++            String hp[] = hostPort.split(":");
++            Socket sock = new Socket(hp[0], Integer.parseInt(hp[1]));
++            InputStream resultStream = null;
++            try {
++                OutputStream outstream = sock.getOutputStream();
++                byte[] data = baos.toByteArray();
++                outstream.write(data);
++                outstream.flush();
++                
++                resultStream = sock.getInputStream();
++                byte[] b = new byte[10000];
++                int len;
++                while ((len = resultStream.read(b)) >= 0) {
++                    // got results
++                    System.out.println("gotlen:" + len);
++                }
++            } finally {
++                if (resultStream != null) {
++                    resultStream.close();
++                }
++                sock.close();
++            }
++        }
++        
++        ZooKeeper zk = createClient();
++        assertEquals(1, zk.getChildren("/", false).size());
++
++        zk.close();
++    }
++}

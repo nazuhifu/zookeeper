@@ -1,0 +1,33 @@
+# === General ===
+# *.log
+*.tmp
+*.swp
+*.class
+*.jar
+*.bak
+
+# === Build output ===
+build/
+dist/
+out/
+target/
+bin/
+
+# === Generated sources ===
+src/c/generated/
+src/java/generated/
+
+# === Temporary files ===
+.revision/
+
+# === IDEs and editors ===
+.vscode/
+.idea/
+*.iml
+*.classpath
+*.project
+.settings/
+
+# === OS files ===
+.DS_Store
+Thumbs.db

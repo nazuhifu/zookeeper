@@ -1,0 +1,100 @@
+JMX enabled by default
+Using config: /home/cc/works/week1/zk1208/bin/../conf/zoo3.cfg
+Starting zookeeper ... 
+STARTED
+2025-11-03 01:07:52,440 - INFO  [main:QuorumPeerConfig@90] - Reading configuration from: /home/cc/works/week1/zk1208/bin/../conf/zoo3.cfg
+2025-11-03 01:07:52,443 - INFO  [main:QuorumPeerConfig@310] - Defaulting to majority quorums
+2025-11-03 01:07:52,449 - INFO  [main:QuorumPeerMain@119] - Starting quorum peer
+2025-11-03 01:07:52,458 - INFO  [main:NIOServerCnxn$Factory@143] - binding to port 0.0.0.0/0.0.0.0:2183
+2025-11-03 01:07:52,465 - INFO  [main:QuorumPeer@819] - tickTime set to 2000
+2025-11-03 01:07:52,465 - INFO  [main:QuorumPeer@830] - minSessionTimeout set to -1
+2025-11-03 01:07:52,465 - INFO  [main:QuorumPeer@841] - maxSessionTimeout set to -1
+2025-11-03 01:07:52,465 - INFO  [main:QuorumPeer@856] - initLimit set to 5
+2025-11-03 01:07:52,474 - INFO  [Thread-1:QuorumCnxManager$Listener@473] - My election bind port: 3890
+2025-11-03 01:07:52,479 - INFO  [QuorumPeer:/0:0:0:0:0:0:0:0:2183:QuorumPeer@621] - LOOKING
+2025-11-03 01:07:52,481 - INFO  [QuorumPeer:/0:0:0:0:0:0:0:0:2183:FastLeaderElection@663] - New election. My id =  3, Proposed zxid = 0
+2025-11-03 01:07:52,489 - INFO  [WorkerReceiver Thread:FastLeaderElection@496] - Notification: 3 (n.leader), 0 (n.zxid), 1 (n.round), LOOKING (n.state), 3 (n.sid), LOOKING (my state)
+2025-11-03 01:07:52,491 - INFO  [WorkerReceiver Thread:FastLeaderElection@496] - Notification: 1 (n.leader), 0 (n.zxid), 1 (n.round), LOOKING (n.state), 1 (n.sid), LOOKING (my state)
+2025-11-03 01:07:52,492 - INFO  [WorkerReceiver Thread:FastLeaderElection@496] - Notification: 3 (n.leader), 0 (n.zxid), 1 (n.round), LOOKING (n.state), 1 (n.sid), LOOKING (my state)
+2025-11-03 01:07:52,492 - INFO  [WorkerReceiver Thread:FastLeaderElection@496] - Notification: 2 (n.leader), 0 (n.zxid), 1 (n.round), LOOKING (n.state), 2 (n.sid), LOOKING (my state)
+2025-11-03 01:07:52,497 - INFO  [WorkerReceiver Thread:FastLeaderElection@496] - Notification: 3 (n.leader), 0 (n.zxid), 1 (n.round), LOOKING (n.state), 2 (n.sid), LOOKING (my state)
+2025-11-03 01:07:52,699 - INFO  [QuorumPeer:/0:0:0:0:0:0:0:0:2183:QuorumPeer@655] - LEADING
+2025-11-03 01:07:52,702 - INFO  [QuorumPeer:/0:0:0:0:0:0:0:0:2183:Leader@54] - TCP NoDelay set to: true
+2025-11-03 01:07:52,725 - INFO  [QuorumPeer:/0:0:0:0:0:0:0:0:2183:Environment@97] - Server environment:zookeeper.version=3.3.3--1, built on 11/03/2025 00:41 GMT
+2025-11-03 01:07:52,725 - INFO  [QuorumPeer:/0:0:0:0:0:0:0:0:2183:Environment@97] - Server environment:host.name=nazhiif
+2025-11-03 01:07:52,725 - INFO  [QuorumPeer:/0:0:0:0:0:0:0:0:2183:Environment@97] - Server environment:java.version=1.8.0_452
+2025-11-03 01:07:52,725 - INFO  [QuorumPeer:/0:0:0:0:0:0:0:0:2183:Environment@97] - Server environment:java.vendor=Private Build
+2025-11-03 01:07:52,726 - INFO  [QuorumPeer:/0:0:0:0:0:0:0:0:2183:Environment@97] - Server environment:java.home=/usr/lib/jvm/java-8-openjdk-amd64/jre
+2025-11-03 01:07:52,726 - INFO  [QuorumPeer:/0:0:0:0:0:0:0:0:2183:Environment@97] - Server environment:java.class.path=/home/cc/works/week1/zk1208/bin/../build/classes:/home/cc/works/week1/zk1208/bin/../build/lib/log4j-1.2.15.jar:/home/cc/works/week1/zk1208/bin/../build/lib/jline-0.9.94.jar:/home/cc/works/week1/zk1208/bin/../zookeeper-*.jar:/home/cc/works/week1/zk1208/bin/../lib/*.jar:/home/cc/works/week1/zk1208/bin/../src/java/lib/ivy-2.1.0.jar:/home/cc/works/week1/zk1208/bin/../conf:
+2025-11-03 01:07:52,726 - INFO  [QuorumPeer:/0:0:0:0:0:0:0:0:2183:Environment@97] - Server environment:java.library.path=/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib
+2025-11-03 01:07:52,727 - INFO  [QuorumPeer:/0:0:0:0:0:0:0:0:2183:Environment@97] - Server environment:java.io.tmpdir=/tmp
+2025-11-03 01:07:52,727 - INFO  [QuorumPeer:/0:0:0:0:0:0:0:0:2183:Environment@97] - Server environment:java.compiler=<NA>
+2025-11-03 01:07:52,727 - INFO  [QuorumPeer:/0:0:0:0:0:0:0:0:2183:Environment@97] - Server environment:os.name=Linux
+2025-11-03 01:07:52,727 - INFO  [QuorumPeer:/0:0:0:0:0:0:0:0:2183:Environment@97] - Server environment:os.arch=amd64
+2025-11-03 01:07:52,728 - INFO  [QuorumPeer:/0:0:0:0:0:0:0:0:2183:Environment@97] - Server environment:os.version=5.4.0-198-generic
+2025-11-03 01:07:52,728 - INFO  [QuorumPeer:/0:0:0:0:0:0:0:0:2183:Environment@97] - Server environment:user.name=cc
+2025-11-03 01:07:52,728 - INFO  [QuorumPeer:/0:0:0:0:0:0:0:0:2183:Environment@97] - Server environment:user.home=/home/cc
+2025-11-03 01:07:52,728 - INFO  [QuorumPeer:/0:0:0:0:0:0:0:0:2183:Environment@97] - Server environment:user.dir=/home/cc/works/week1/zk1208
+2025-11-03 01:07:52,730 - INFO  [QuorumPeer:/0:0:0:0:0:0:0:0:2183:ZooKeeperServer@151] - Created server with tickTime 2000 minSessionTimeout 4000 maxSessionTimeout 40000 datadir /home/cc/works/week1/zk1208/zkdata3/version-2 snapdir /home/cc/works/week1/zk1208/zkdata3/version-2
+2025-11-03 01:07:52,735 - INFO  [QuorumPeer:/0:0:0:0:0:0:0:0:2183:FileTxnSnapLog@208] - Snapshotting: 0
+2025-11-03 01:07:52,749 - INFO  [LearnerHandler-/127.0.0.1:59014:LearnerHandler@249] - Follower sid: 1 : info : org.apache.zookeeper.server.quorum.QuorumPeer$QuorumServer@812b798
+2025-11-03 01:07:52,750 - INFO  [LearnerHandler-/127.0.0.1:59014:LearnerHandler@319] - Sending snapshot last zxid of peer is 0x0  zxid of leader is 0x100000000sent zxid of db as 0x0
+2025-11-03 01:07:52,756 - WARN  [LearnerHandler-/127.0.0.1:59014:Leader@471] - Commiting zxid 0x100000000 from /127.0.0.1:2890 not first!
+2025-11-03 01:07:52,756 - WARN  [LearnerHandler-/127.0.0.1:59014:Leader@473] - First is 0
+2025-11-03 01:07:52,757 - INFO  [LearnerHandler-/127.0.0.1:59014:Leader@497] - Have quorum of supporters; starting up and setting last processed zxid: 4294967296
+2025-11-03 01:07:53,529 - INFO  [LearnerHandler-/127.0.0.1:59022:LearnerHandler@249] - Follower sid: 2 : info : org.apache.zookeeper.server.quorum.QuorumPeer$QuorumServer@4cdbe32d
+2025-11-03 01:07:53,530 - INFO  [LearnerHandler-/127.0.0.1:59022:LearnerHandler@319] - Sending snapshot last zxid of peer is 0x0  zxid of leader is 0x100000000sent zxid of db as 0x100000000
+2025-11-03 01:07:57,867 - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2183:NIOServerCnxn$Factory@251] - Accepted socket connection from /127.0.0.1:33914
+2025-11-03 01:07:57,871 - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2183:NIOServerCnxn@1237] - Processing stat command from /127.0.0.1:33914
+2025-11-03 01:07:57,873 - INFO  [Thread-9:NIOServerCnxn$StatCommand@1153] - Stat command output
+2025-11-03 01:07:57,875 - INFO  [Thread-9:NIOServerCnxn@1435] - Closed socket connection for client /127.0.0.1:33914 (no session established for client)
+2025-11-03 01:08:27,437 - INFO  [SyncThread:3:FileTxnLog@197] - Creating new log file: log.100000001
+2025-11-03 01:08:50,702 - INFO  [ProcessThread:-1:PrepRequestProcessor@387] - Processed session termination for sessionid: 0xff9a474199360001
+2025-11-03 01:08:50,764 - INFO  [ProcessThread:-1:PrepRequestProcessor@387] - Processed session termination for sessionid: 0xff9a474199360002
+2025-11-03 01:08:50,824 - INFO  [ProcessThread:-1:PrepRequestProcessor@387] - Processed session termination for sessionid: 0xff9a474199360003
+2025-11-03 01:08:50,883 - INFO  [ProcessThread:-1:PrepRequestProcessor@387] - Processed session termination for sessionid: 0xff9a474199360004
+2025-11-03 01:08:50,942 - INFO  [ProcessThread:-1:PrepRequestProcessor@387] - Processed session termination for sessionid: 0xff9a474199360005
+2025-11-03 01:08:51,000 - INFO  [ProcessThread:-1:PrepRequestProcessor@387] - Processed session termination for sessionid: 0xff9a474199360006
+2025-11-03 01:08:51,059 - INFO  [ProcessThread:-1:PrepRequestProcessor@387] - Processed session termination for sessionid: 0xff9a474199360007
+2025-11-03 01:08:51,118 - INFO  [ProcessThread:-1:PrepRequestProcessor@387] - Processed session termination for sessionid: 0xff9a474199360008
+2025-11-03 01:08:51,175 - INFO  [ProcessThread:-1:PrepRequestProcessor@387] - Processed session termination for sessionid: 0xff9a474199360009
+2025-11-03 01:08:51,232 - INFO  [ProcessThread:-1:PrepRequestProcessor@387] - Processed session termination for sessionid: 0xff9a47419936000a
+2025-11-03 01:09:49,909 - INFO  [ProcessThread:-1:PrepRequestProcessor@387] - Processed session termination for sessionid: 0xff9a474199360000
+2025-11-03 01:10:13,597 - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2183:NIOServerCnxn$Factory@251] - Accepted socket connection from /127.0.0.1:54748
+2025-11-03 01:10:13,597 - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2183:NIOServerCnxn@1237] - Processing stat command from /127.0.0.1:54748
+2025-11-03 01:10:13,598 - INFO  [Thread-10:NIOServerCnxn$StatCommand@1153] - Stat command output
+2025-11-03 01:10:13,600 - INFO  [Thread-10:NIOServerCnxn@1435] - Closed socket connection for client /127.0.0.1:54748 (no session established for client)
+2025-11-03 01:10:18,639 - WARN  [Thread-3:QuorumCnxManager$RecvWorker@727] - Connection broken for id 1, my id = 3, error = java.io.IOException: Channel eof
+2025-11-03 01:10:18,639 - WARN  [Thread-3:QuorumCnxManager$RecvWorker@730] - Interrupting SendWorker
+2025-11-03 01:10:18,640 - ERROR [LearnerHandler-/127.0.0.1:59014:LearnerHandler@461] - Unexpected exception causing shutdown while sock still open
+java.io.EOFException
+	at java.io.DataInputStream.readInt(DataInputStream.java:392)
+	at org.apache.jute.BinaryInputArchive.readInt(BinaryInputArchive.java:63)
+	at org.apache.zookeeper.server.quorum.QuorumPacket.deserialize(QuorumPacket.java:84)
+	at org.apache.jute.BinaryInputArchive.readRecord(BinaryInputArchive.java:108)
+	at org.apache.zookeeper.server.quorum.LearnerHandler.run(LearnerHandler.java:375)
+2025-11-03 01:10:18,640 - WARN  [Thread-2:QuorumCnxManager$SendWorker@633] - Interrupted while waiting for message on queue
+java.lang.InterruptedException
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2088)
+	at java.util.concurrent.ArrayBlockingQueue.poll(ArrayBlockingQueue.java:418)
+	at org.apache.zookeeper.server.quorum.QuorumCnxManager$SendWorker.run(QuorumCnxManager.java:622)
+2025-11-03 01:10:18,642 - WARN  [LearnerHandler-/127.0.0.1:59014:LearnerHandler@474] - ******* GOODBYE /127.0.0.1:59014 ********
+2025-11-03 01:10:18,643 - WARN  [Thread-2:QuorumCnxManager$SendWorker@642] - Send worker leaving thread
+2025-11-03 01:10:18,659 - ERROR [LearnerHandler-/127.0.0.1:59022:LearnerHandler@461] - Unexpected exception causing shutdown while sock still open
+java.io.EOFException
+	at java.io.DataInputStream.readInt(DataInputStream.java:392)
+	at org.apache.jute.BinaryInputArchive.readInt(BinaryInputArchive.java:63)
+	at org.apache.zookeeper.server.quorum.QuorumPacket.deserialize(QuorumPacket.java:84)
+	at org.apache.jute.BinaryInputArchive.readRecord(BinaryInputArchive.java:108)
+	at org.apache.zookeeper.server.quorum.LearnerHandler.run(LearnerHandler.java:375)
+2025-11-03 01:10:18,659 - WARN  [Thread-5:QuorumCnxManager$RecvWorker@727] - Connection broken for id 2, my id = 3, error = java.io.IOException: Channel eof
+2025-11-03 01:10:18,660 - WARN  [Thread-5:QuorumCnxManager$RecvWorker@730] - Interrupting SendWorker
+2025-11-03 01:10:18,660 - WARN  [LearnerHandler-/127.0.0.1:59022:LearnerHandler@474] - ******* GOODBYE /127.0.0.1:59022 ********
+2025-11-03 01:10:18,661 - WARN  [Thread-4:QuorumCnxManager$SendWorker@633] - Interrupted while waiting for message on queue
+java.lang.InterruptedException
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2088)
+	at java.util.concurrent.ArrayBlockingQueue.poll(ArrayBlockingQueue.java:418)
+	at org.apache.zookeeper.server.quorum.QuorumCnxManager$SendWorker.run(QuorumCnxManager.java:622)
+2025-11-03 01:10:18,662 - WARN  [Thread-4:QuorumCnxManager$SendWorker@642] - Send worker leaving thread
