@@ -19,6 +19,10 @@ src/java/generated/
 
 # === Temporary files ===
 .revision/
+zkdata1/version-2/
+zkdata2/version-2/
+zkdata3/version-2/
+zk*.log
 
 # === IDEs and editors ===
 .vscode/

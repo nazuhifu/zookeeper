@@ -42,6 +42,16 @@ stop_cluster() {
   echo "All nodes stopped."
 }
 
+trigger_bug() {
+  echo "=== Triggering known ZooKeeper bug ==="
+  javac -cp build/classes:build/lib/*:. RawSessionClient.java
+  java -cp build/classes:build/lib/*:. RawSessionClient 127.0.0.1:2181 10
+}
+
+cli() {
+  "$BIN/zkCli.sh" -server 127.0.0.1:2181
+}
+
 case "$1" in
   start)
     start_cluster
@@ -52,8 +62,14 @@ case "$1" in
   stop)
     stop_cluster
     ;;
+  trigger)
+    trigger_bug
+    ;;
+  cli)
+    cli
+    ;;
   *)
-    echo "Usage: $0 {start|status|stop}"
+    echo "Usage: $0 {start|status|stop|trigger|cli}"
     exit 1
     ;;
 esac
